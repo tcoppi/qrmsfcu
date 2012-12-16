@@ -49,8 +49,9 @@ int main(int argc, char**argv)
         else if(strncmp(mesg, argv[1], strlen(argv[1])) == 0) {
             printf("going\n");
 
+            sendto(sockfd, "going", 6, 0, (struct sockaddr *)&cliaddr, sizeof(cliaddr));
+
             for(i=0;i<MAXCLIENTS;i++) {
-                if(&addresses[i] == 0) continue;
                 sendto(sockfd, "go", 3, 0, (struct sockaddr *)&addresses[i], sizeof(addresses[i]));
             }
 

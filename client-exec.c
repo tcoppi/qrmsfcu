@@ -45,6 +45,9 @@ int main(int argc, char**argv)
             printf("went!\n");
             sendto(sockfd, "went", 5, 0, (struct sockaddr *)&servaddr, sizeof(servaddr));
         }
+        else if(strncmp(recvline, "success", 8) == 0) {
+            printf("successfully subscribed to server\n");
+        }
     }
 }
 

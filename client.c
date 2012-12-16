@@ -28,7 +28,6 @@ int main(int argc, char**argv)
               (struct sockaddr *)&servaddr,sizeof(servaddr));
         n = recvfrom(sockfd,recvline,500,0,NULL,NULL);
         recvline[n] = 0;
-        fputs(recvline,stdout);
     }
 }
 
