@@ -58,7 +58,7 @@ int main(int argc, char**argv)
             printf("went\n");
         }
         else {
-    //        sendto(sockfd,mesg,n,0,(struct sockaddr *)&cliaddr,sizeof(cliaddr));
+            sendto(sockfd,mesg,n,0,(struct sockaddr *)&cliaddr,sizeof(cliaddr));
             printf("-------------------------------------------------------\n");
             mesg[n] = 0;
             printf("Received the following:\n");
