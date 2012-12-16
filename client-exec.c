@@ -4,6 +4,17 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/time.h>
+#include <unistd.h>
+
+double get_time(void)
+{
+   struct timeval      timev;
+
+   gettimeofday(&timev, NULL);
+   return (double)timev.tv_sec + (((double)timev.tv_usec) / 1000000);
+}
+
 
 int main(int argc, char**argv)
 {
@@ -11,6 +22,7 @@ int main(int argc, char**argv)
     struct sockaddr_in servaddr,cliaddr;
     char sendline[1000];
     char recvline[1000];
+    double t1, t2, t;
 
     if (argc != 3) {
        exit(1);
@@ -33,6 +45,7 @@ int main(int argc, char**argv)
     */
 
     // send sub message
+    t1 = get_time();
     sendto(sockfd, "sub", 3, 0, (struct sockaddr *)&servaddr, sizeof(servaddr));
 
     for (;;) {
@@ -46,6 +59,9 @@ int main(int argc, char**argv)
             sendto(sockfd, "went", 5, 0, (struct sockaddr *)&servaddr, sizeof(servaddr));
         }
         else if(strncmp(recvline, "success", 8) == 0) {
+            t2 = get_time();
+            t = t2 - t1;
+            printf("latency: %3.3f seconds\n", t);
             printf("successfully subscribed to server\n");
         }
     }
