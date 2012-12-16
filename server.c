@@ -36,15 +36,17 @@ int main(int argc, char**argv)
         len = sizeof(cliaddr);
         n = recvfrom(sockfd,mesg,500,0,(struct sockaddr *)&cliaddr,&len);
 
+        mesg[n] = 0;
+
         // sub means subscribe to messages
-        if(strncmp(mesg, "sub", 500) == 0) {
+        if(strncmp(mesg, "sub", 4)== 0) {
             addresses[bufpos % MAXCLIENTS] = cliaddr;
             bufpos++;
 
             sendto(sockfd, "success", 8, 0, (struct sockaddr *)&cliaddr, sizeof(cliaddr));
         }
         // this is a message with the key, which means to push out the "go" message
-        else if(strncmp(mesg, argv[1], 500) == 0) {
+        else if(strncmp(mesg, argv[1], strlen(argv[1])) == 0) {
             printf("going\n");
 
             for(i=0;i<MAXCLIENTS;i++) {

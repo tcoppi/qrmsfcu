@@ -31,8 +31,14 @@ int main(int argc, char**argv)
         fputs(recvline,stdout);
     }
     */
+
+    // send sub message
+    sendto(sockfd, "sub", 3, 0, (struct sockaddr *)&servaddr, sizeof(servaddr));
+
     for (;;) {
         n = recvfrom(sockfd, recvline, 500, 0, NULL, NULL);
+        recvline[n] = 0;
+
 
         if(strncmp(recvline, "go", 3) == 0) {
             system(argv[2]);
